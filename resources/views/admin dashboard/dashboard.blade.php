@@ -1,9 +1,11 @@
+extends('layouts.admin.app')
+
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - CryptoVault</title>
+    <title>Dashboard </title>
     <script>
         // Load theme immediately to prevent flash
         (function() {
