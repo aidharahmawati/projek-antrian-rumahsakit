@@ -1,125 +1,119 @@
 @extends('layouts.blank')
 
-@section('title', 'Form Pasien')
+@section('title', 'Form Antrian')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-8">
+
             <div class="card">
-                <div class="card-header"></div>
-
                 <div class="card-body p-5">
-                    <h3 class="text-center fw-bold mb-5">Form Pasien</h3>
 
-                    <form method="POST" action="{{ route('form-pasien.store') }}">
+                    <h3 class="text-center fw-bold mb-4">Form Antrian Rumah Sakit</h3>
+
+                    <form method="POST" action="{{ route('antrian.store') }}">
                         @csrf
 
+                        {{-- Nomor Antrian --}}
+                        <div class="form-group mb-3">
+                            <label>Nomor Antrian</label>
+                            <input type="text" name="nomor_antrian"
+                                class="form-control @error('nomor_antrian') is-invalid @enderror"
+                                value="{{ old('nomor_antrian') }}"
+                                placeholder="Contoh: A001">
+
+                            @error('nomor_antrian')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        {{-- Pasien --}}
+                        <div class="form-group mb-3">
+                            <label>Pasien</label>
+                            <select name="pasien_id"
+                                class="form-control @error('pasien_id') is-invalid @enderror">
+                                <option value="">-- Pilih Pasien --</option>
+                                @foreach($pasien as $p)
+                                    <option value="{{ $p->id }}"
+                                        {{ old('pasien_id') == $p->id ? 'selected' : '' }}>
+                                        {{ $p->nama }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            @error('pasien_id')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        {{-- Dokter --}}
+                        <div class="form-group mb-3">
+                            <label>Dokter</label>
+                            <select name="dokter_id"
+                                class="form-control @error('dokter_id') is-invalid @enderror">
+                                <option value="">-- Pilih Dokter --</option>
+                                @foreach($dokter as $d)
+                                    <option value="{{ $d->id }}"
+                                        {{ old('dokter_id') == $d->id ? 'selected' : '' }}>
+                                        {{ $d->nama_dokter }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            @error('dokter_id')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        {{-- Poli --}}
+                        <div class="form-group mb-3">
+                            <label>Poli</label>
+                            <select name="poli_id"
+                                class="form-control @error('poli_id') is-invalid @enderror">
+                                <option value="">-- Pilih Poli --</option>
+                                @foreach($poli as $p)
+                                    <option value="{{ $p->id }}"
+                                        {{ old('poli_id') == $p->id ? 'selected' : '' }}>
+                                        {{ $p->nama_poli }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            @error('poli_id')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        {{-- Status --}}
+                        <div class="form-group mb-4">
+                            <label>Status</label>
+                            <select name="status"
+                                class="form-control @error('status') is-invalid @enderror">
+                                <option value="">-- Pilih Status --</option>
+                                <option value="menunggu" {{ old('status') == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
+                                <option value="dipanggil" {{ old('status') == 'dipanggil' ? 'selected' : '' }}>Dipanggil</option>
+                                <option value="selesai" {{ old('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                            </select>
+
+                            @error('status')
+                                <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        {{-- Button --}}
                         <div class="form-group">
-                            <label for="nama">Nama</label>
-                            <input type="text" class="form-control @error('nama') is-invalid @enderror" id="nama" name="nama" value="{{ old('nama') }}" >
-
-                            @error('nama')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <button type="submit" class="btn btn-primary w-100">
+                                Simpan Antrian
+                            </button>
                         </div>
 
-                        <div class="row">
-                             <div class="form-group">
-                            <label for="nomor_telepon">Nomor Telepon</label>
-                            <input id="telp" type="text" class="form-control @error('telp') is-invalid @enderror" id="telp" name="telp" value="{{ old('telp') }}" >
-
-                            @error('telp')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        
-                        </div>
-
-                        <div class="col-md-6">
-                             <div class="form-group">
-                            <label for="email">Email</label>
-                            <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" >
-
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="alamat">Alamat</label>
-                            <input type="text" class="form-control @error('alamat') is-invalid @enderror" id="alamat" name="alamat" value="{{ old('alamat') }}" >
-
-                            @error('alamat')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror 
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                            <label for="asal_instansi">Asal Instansi</label>
-                            <input type="text" class="form-control @error('asal_instansi') is-invalid @enderror" id="asal_instansi" name="asal_instansi" value="{{ old('asal_instansi') }}" >
-
-                            @error('asal_instansi')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                            </div>
-                        </div>
-
-                          <div class="form-group">
-                            <label for="keperluan">Keperluan</label>
-                            <input type="text" class="form-control @error('keperluan') is-invalid @enderror" id="keperluan" name="keperluan" value="{{ old('keperluan') }}" >
-
-                            @error('keperluan')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <div class="grid-gap-2">
-                                <button type="submit" class="btn btn-primary d-block">Submit</button>
-                            </div>
-                        </div>
-                    
                     </form>
-
 
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 @endsection
-
-@push('scripts')
-    <script src="{{ asset('/js/plugin/select2/select2.full.min.js') }}"></script>
-    <script src="{{ asset('/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
-    </script>
-
-    @if (session('success'))
-    <script>
-        swal({
-            title: "Sukses",
-            text: "{{ session('success') }}",
-            icon: "success",
-            button: "OK",
-        });
-    </script>
-    @endif
-@endpush

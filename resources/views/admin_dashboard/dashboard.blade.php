@@ -46,7 +46,6 @@ https://templatemo.com/tm-609-crypto-vault
                 <div class="logo-icon">CV</div>
                 <span class="logo-text">CryptoVault</span>
             </div>
-
             <nav class="nav-section">
                 <div class="nav-label">Main Menu</div>
                 <a href="index.html" class="nav-item active">
@@ -58,13 +57,13 @@ https://templatemo.com/tm-609-crypto-vault
                     </svg>
                     Dashboard
                 </a>
-                <a href="markets.html" class="nav-item">
+                <a href="{{ route('admin.index') }}" class="nav-item">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
                     </svg>
                     Admin
                 </a>
-                <a href="wallet.html" class="nav-item">
+                <a href="{{ route('dokter.index') }}" class="nav-item">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
                         <line x1="1" y1="10" x2="23" y2="10"/>
@@ -72,14 +71,14 @@ https://templatemo.com/tm-609-crypto-vault
                     Dokter
                 </a>
 
-                <a href="transactions.html" class="nav-item">
+                <a href="{{ route('poli.index') }}" class="nav-item">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M12 1v22M1 12h22"/>
                     </svg>
                     Poli
                 </a>
 
-                    <a href="transactions.html" class="nav-item">
+                    <a href="{{ route('antrian.index') }}" class="nav-item">
                     <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M12 1v22M1 12h22"/>
                     </svg>
@@ -111,9 +110,9 @@ https://templatemo.com/tm-609-crypto-vault
                 </div>
                 <div class="header-right">
                     <div class="user-menu">
-                        <div class="user-avatar">AM</div>
+                        <div class="user-avatar">Ad</div>
                         <div class="user-info">
-                            <span class="user-name">Alex Morgan</span>
+                            <span class="user-name">Admin</span>
                             <span class="user-role">Pro Trader</span>
                         </div>
                     </div>

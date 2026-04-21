@@ -14,18 +14,18 @@ Route::get('/', function () {
 
       
 
-Route::middleware(['isAdmin'])->group(function () {
-    Route::get('/test-admin', function () {
-        return "Admin only";
-    });
+Route::get('/admin', [AdminController::class, 'index'])
+    ->middleware('auth');
     
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-});
+    
+    Route::get('/dashboard', function () {return view('admin_dashboard.dashboard');})->name('dashboard');
+    
+    Route::resource('/dokter', App\Http\Controllers\DokterController::class);
+    Route::resource('/poli', App\Http\Controllers\PoliController::class);
+    Route::resource('/antrian', App\Http\Controllers\AntrianController::class);
 
-Route::get('/dashboard', function () {
-    return view('admin dashboard.dashboard');
-});
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');

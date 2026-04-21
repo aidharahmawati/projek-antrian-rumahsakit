@@ -3,22 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Dokter;
+use App\Models\Poli;
+
 
 class DokterController extends Controller
 {
     public function index()
     {
-        $dokter = [
-            ['id' => 1, 'name' => 'Dr. John Doe', 'spesialis' => 'Poli Umum'],
-            ['id' => 2, 'name' => 'Dr. Jane Smith', 'spesialis' => 'Poli Gigi'],
-            ['id' => 3, 'name' => 'Dr. Emily Davis', 'spesialis' => 'Poli Anak'],
-        ];
-        return view('dokter.index', compact('dokter'));
+        // ambil data dokter + relasi poli
+        $dokter = Dokter::with('poli')->get();
+
+        return view('pages.dokter.index', compact('dokter'));
     }
 
     public function create()
     {
-        return view('dokter.create');
+        $poli = \App\Models\Poli::all();
+        return view('pages.dokter.create', compact('poli'));
+        return view('pages.dokter.create');
     }
 
     public function store(Request $request)
@@ -40,13 +43,14 @@ class DokterController extends Controller
     public function show($id)
     {
         $dokter = Dokter::findOrFail($id);
-        return view('dokter.show', compact('dokter'));
+        return view('pages.dokter.show', compact('dokter'));
     }
 
     public function edit($id)
     {
         $dokter = Dokter::findOrFail($id);
-        return view('dokter.edit', compact('dokter'));
+        $poli = Poli::all();
+        return view('pages.dokter.edit', compact('dokter', 'poli'));
     }
 
     public function update(Request $request, $id)
