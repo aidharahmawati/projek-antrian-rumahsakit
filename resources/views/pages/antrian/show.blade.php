@@ -9,7 +9,7 @@
         <p><strong>Nomor Antrian:</strong> {{ $antrian->nomor_antrian }}</p>
 
         <p><strong>Nama Pasien:</strong>
-            {{ $antrian->pasien->nama ?? '-' }}
+            {{ $antrian->pasien->nama_pasien ?? '-' }}
         </p>
 
         <p><strong>Dokter:</strong>

@@ -29,7 +29,7 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->nomor_antrian }}</td>
-                    <td>{{ $item->pasien->nama ?? '-' }}</td>
+                    <td>{{ $item->pasien->nama_pasien ?? '-' }}</td>
                     <td>{{ $item->dokter->nama_dokter ?? '-' }}</td>
                     <td>{{ $item->poli->nama_poli ?? '-' }}</td>
                     <td>{{ $item->status }}</td>

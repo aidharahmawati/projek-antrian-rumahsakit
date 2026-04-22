@@ -7,90 +7,101 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-
             <div class="card">
+                <div class="card-header"></div>
+
                 <div class="card-body p-5">
+                    <h3 class="text-center fw-bold mb-5">Form Antrian</h3>
 
-                    <h3 class="text-center fw-bold mb-4">Form Antrian Rumah Sakit</h3>
-
-                    <form method="POST" action="{{ route('antrian.store') }}">
+                    <form method="POST" action="{{ route('form-pasien.store') }}">
                         @csrf
 
-                        {{-- Nomor Antrian --}}
+                        {{-- Nama --}}
                         <div class="form-group mb-3">
-                            <label>Nomor Antrian</label>
-                            @error('nomor_antrian')
-                                <span class="invalid-feedback">{{ $message }}</span>
+                            <label>Nama Pasien</label>
+                            <input type="text" name="nama_pasien" 
+                                   class="form-control @error('nama_pasien') is-invalid @enderror"
+                                   value="{{ old('nama_pasien') }}">
+
+                            @error('nama_pasien')
+                                <span class="invalid-feedback">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                             @enderror
                         </div>
 
-                        {{-- Pasien --}}
-                          <div class="form-group mb-3">
-                        <label for="spesialis" class="form-label">Pasien</label>
-                        <input type="text" name="pasien_id" value="{{ old('pasien_id') }}" class="form-control @error('pasien_id') is-invalid @enderror" placeholder="Masukkan pasien">
-                        @error('pasien_id')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                        {{-- Dokter --}}
+                        {{-- Alamat --}}
                         <div class="form-group mb-3">
-                            <label>Dokter</label>
-                            <select name="dokter_id"
-                                class="form-control @error('dokter_id') is-invalid @enderror">
-                                <option value="">-- Pilih Dokter --</option>
-                                @foreach($dokter as $d)
-                                    <option value="{{ $d->id }}"
-                                        {{ old('dokter_id') == $d->id ? 'selected' : '' }}>
-                                        {{ $d->nama_dokter }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <label>Alamat</label>
+                            <input type="text" name="alamat" 
+                                   class="form-control @error('alamat') is-invalid @enderror"
+                                   value="{{ old('alamat') }}">
 
-                            @error('dokter_id')
-                                <span class="invalid-feedback">{{ $message }}</span>
+                            @error('alamat')
+                                <span class="invalid-feedback">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        {{-- Telepon --}}
+                        <div class="form-group mb-3">
+                            <label>Telepon</label>
+                            <input type="text" name="telp" 
+                                   class="form-control @error('telp') is-invalid @enderror"
+                                   value="{{ old('telp') }}">
+
+                            @error('telp')
+                                <span class="invalid-feedback">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                             @enderror
                         </div>
 
                         {{-- Poli --}}
                         <div class="form-group mb-3">
                             <label>Poli</label>
-                            <select name="poli_id"
-                                class="form-control @error('poli_id') is-invalid @enderror">
+                            <select name="poli_id" 
+                                    class="form-control @error('poli_id') is-invalid @enderror">
                                 <option value="">-- Pilih Poli --</option>
                                 @foreach($poli as $p)
-                                    <option value="{{ $p->id }}"
-                                        {{ old('poli_id') == $p->id ? 'selected' : '' }}>
+                                    <option value="{{ $p->id }}" {{ old('poli_id') == $p->id ? 'selected' : '' }}>
                                         {{ $p->nama_poli }}
                                     </option>
                                 @endforeach
                             </select>
 
                             @error('poli_id')
-                                <span class="invalid-feedback">{{ $message }}</span>
+                                <span class="invalid-feedback">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                             @enderror
                         </div>
 
-                        {{-- Status --}}
+                        {{-- Dokter --}}
                         <div class="form-group mb-4">
-                            <label>Status</label>
-                            <select name="status"
-                                class="form-control @error('status') is-invalid @enderror">
-                                <option value="">-- Pilih Status --</option>
-                                <option value="menunggu" {{ old('status') == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
-                                <option value="dipanggil" {{ old('status') == 'dipanggil' ? 'selected' : '' }}>Dipanggil</option>
-                                <option value="selesai" {{ old('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                            <label>Dokter</label>
+                            <select name="dokter_id" 
+                                    class="form-control @error('dokter_id') is-invalid @enderror">
+                                <option value="">-- Pilih Dokter --</option>
+                                @foreach($dokter as $d)
+                                    <option value="{{ $d->id }}" {{ old('dokter_id') == $d->id ? 'selected' : '' }}>
+                                        {{ $d->nama_dokter }}
+                                    </option>
+                                @endforeach
                             </select>
 
-                            @error('status')
-                                <span class="invalid-feedback">{{ $message }}</span>
+                            @error('dokter_id')
+                                <span class="invalid-feedback">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                             @enderror
                         </div>
 
                         {{-- Button --}}
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary w-100">
-                                Simpan Antrian
+                                Ambil Antrian
                             </button>
                         </div>
 
@@ -98,7 +109,6 @@
 
                 </div>
             </div>
-
         </div>
     </div>
 </div>

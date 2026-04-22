@@ -1,0 +1,113 @@
+/* RESET DASAR */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* BACKGROUND */
+body {
+    display: flex;
+    flex-direction: column;
+    background: #f4f6f9;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* WRAPPER UTAMA */
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* KONTEN AGAR FLEX */
+.main-content {
+    width: 100%;
+}
+
+/* CENTER CARD */
+.center-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+/* CARD ANTRIAN */
+
+/* JUDUL */
+.antrian-title {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+/* NOMOR ANTRIAN */
+.nomor-antrian {
+    font-size: 70px;
+    font-weight: bold;
+    color: #0d6efd;
+    letter-spacing: 6px;
+    text-align: center;
+    margin-bottom: 10px;
+    animation: pop 0.5s ease;
+}
+
+/* ANIMASI */
+@keyframes pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* GARIS PEMBATAS */
+.divider {
+    border-top: 2px dashed #ccc;
+    margin: 20px 0;
+}
+
+/* INFO */
+.antrian-info {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.antrian-info span {
+    font-weight: 600;
+}
+
+/* BUTTON */
+.btn-antrian {
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: 500;
+    transition: 0.3s;
+    display: inline-block; /* penting */
+    width: auto; /* jangan full */
+}
+
+.btn-antrian:hover {
+    background: #0b5ed7;
+    transform: scale(1.03);
+}
+
+
+.antrian-card {
+    width: 100%;
+    max-width: 420px; /* kecilkan dari sebelumnya */
+    margin: 0 auto;   /* biar center */
+    border-radius: 15px;
+    background: #ffffff;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.nomor-antrian {
+    font-size: 80px;
+    font-weight: bold;
+    color: #0d6efd;
+}

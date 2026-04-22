@@ -14,27 +14,60 @@ class FormPasienController extends Controller
     {
         $poli = Poli::all();
         $dokter = Dokter::all();
-        $antrian = Antrian::all();
-        $pasien = Pasien::all();
-        return view('pages.form-pasien.create', compact('poli', 'dokter', 'antrian', 'pasien'));
+
+        return view('pages.form-pasien.create', compact('poli','dokter'));
     }
 
-    public function create(Request $request)
-    {
-        $request->validate([
-            'nama_pasien' => 'required|string|max:255',
-            'keterangan' => 'string',
-            'poli_id' => 'required|exists:poli,id',
-            'dokter_id' => 'required|exists:dokter,id',
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'nama_pasien' => 'required|string|max:255',
+        'poli_id' => 'required|exists:poli,id',
+        'dokter_id' => 'required|exists:dokter,id',
+        'alamat' => 'nullable|string|max:255',
+        'telp' => 'nullable|string|max:16',
 
-        Pasien::create([
-            'nama_pasien' => $request->nama_pasien,
-            'keterangan' => $request->keterangan,
-            'poli_id' => $request->poli_id,
-            'dokter_id' => $request->dokter_id,
-        ]);
+    ]);
 
-        return redirect()->route('pasien.index')->with('success', 'Pasien berhasil ditambahkan.');
-    }
+    // ✅ simpan pasien
+    $pasien = Pasien::create([
+        'nama_pasien' => $request->nama_pasien,
+        'alamat' => $request->alamat ?? '',
+        'telp' => $request->telp ?? '',
+        'poli_id' => $request->poli_id,
+        'dokter_id' => $request->dokter_id,
+    ]);
+
+    // 🔥 ambil tanggal hari ini
+    $today = date('Y-m-d');
+
+    // 🔥 ambil antrian terakhir
+    $last = Antrian::where('tanggal', $today)->orderBy('id','desc')->first();
+
+    $no = $last ? ((int) substr($last->nomor_antrian,1)) + 1 : 1;
+
+    $kode = 'A' . str_pad($no, 3, '0', STR_PAD_LEFT);
+
+    $antrian = Antrian::all()->last(); // Ambil antrian terakhir untuk mendapatkan ID terbaru
+    // ✅ simpan antrian
+   $antrian = Antrian::create([
+    'nomor_antrian' => $kode,
+    'tanggal' => $today,
+    'status' => 'menunggu',
+    'pasien_id' => $pasien->id,
+    'poli_id' => $request->poli_id,
+    'dokter_id' => $request->dokter_id,
+]);
+
+return redirect()->route('antrian.hasil', $antrian->id);
+}
+
+public function hasil($id)
+{
+    $antrian = Antrian::with(['pasien','dokter','poli'])->findOrFail($id);
+
+    return view('pages.form-pasien.nomor_antrian', compact('antrian'));
+}
+
+
 }

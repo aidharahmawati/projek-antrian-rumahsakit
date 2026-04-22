@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FormPasienController;
 
 
 
@@ -10,7 +11,9 @@ Route::get('/', function () {
 });
 
     Route::get('/form-pasien', [App\Http\Controllers\FormPasienController::class, 'showForm'])->name('form-pasien.create');
-    Route::post('/form-pasien', [App\Http\Controllers\FormPasienController::class, 'create'])->name('form-pasien.store');
+    Route::post('/form-pasien', [App\Http\Controllers\FormPasienController::class, 'store'])->name('form-pasien.store');
+    Route::get('/antrian/hasil/{id}', [FormPasienController::class, 'hasil'])
+    ->name('antrian.hasil');
 
       
 
