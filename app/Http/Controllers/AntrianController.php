@@ -38,18 +38,38 @@ public function store(Request $request)
         'pasien_id' => 'required|exists:pasien,id',
         'poli_id' => 'required|exists:poli,id',
         'dokter_id' => 'required|exists:dokter,id',
-        'status' => 'required|string|max:255',
     ]);
 
-   Antrian::create([
-    'nomor_antrian' => $request->nomor_antrian,
-    'pasien_id' => $request->pasien_id,
-    'poli_id' => $request->poli_id,
-    'dokter_id' => $request->dokter_id,
-    'status' => $request->status,
-]);
+    // ambil tanggal hari ini
+    $today = date('Y-m-d');
 
-    return redirect()->route('antrian.index')->with('success', 'Antrian berhasil ditambahkan.');
+    // ambil antrian terakhir HARI INI
+    $last = Antrian::where('tanggal', $today)
+            ->orderBy('id', 'desc')
+            ->first();
+
+    if ($last) {
+        $lastNumber = (int) substr($last->nomor_antrian, 1);
+        $newNumber = $lastNumber + 1;
+    } else {
+        $newNumber = 1;
+    }
+
+    // format A001
+    $kode = 'A' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+
+    // simpan
+    Antrian::create([
+        'nomor_antrian' => $kode,
+        'tanggal' => $today, // ✅ WAJIB karena ada di model
+        'status' => 'menunggu',
+        'pasien_id' => $request->pasien_id,
+        'dokter_id' => $request->dokter_id,
+        'poli_id' => $request->poli_id,
+    ]);
+
+    return redirect()->route('antrian.index')
+        ->with('success', 'Antrian berhasil ditambahkan');
 }
 
 public function show($id)

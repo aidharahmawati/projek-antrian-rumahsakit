@@ -14,7 +14,9 @@ class FormPasienController extends Controller
     {
         $poli = Poli::all();
         $dokter = Dokter::all();
-        return view('pages.form-pasien.create', compact('poli', 'dokter'));
+        $antrian = Antrian::all();
+        $pasien = Pasien::all();
+        return view('pages.form-pasien.create', compact('poli', 'dokter', 'antrian', 'pasien'));
     }
 
     public function create(Request $request)

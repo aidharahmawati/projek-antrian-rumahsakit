@@ -1,4 +1,5 @@
-@extends('layouts.blank')
+
+@extends('layouts.app')
 
 @section('title', 'Form Antrian')
 
@@ -18,34 +19,19 @@
                         {{-- Nomor Antrian --}}
                         <div class="form-group mb-3">
                             <label>Nomor Antrian</label>
-                            <input type="text" name="nomor_antrian"
-                                class="form-control @error('nomor_antrian') is-invalid @enderror"
-                                value="{{ old('nomor_antrian') }}"
-                                placeholder="Contoh: A001">
-
                             @error('nomor_antrian')
                                 <span class="invalid-feedback">{{ $message }}</span>
                             @enderror
                         </div>
 
                         {{-- Pasien --}}
-                        <div class="form-group mb-3">
-                            <label>Pasien</label>
-                            <select name="pasien_id"
-                                class="form-control @error('pasien_id') is-invalid @enderror">
-                                <option value="">-- Pilih Pasien --</option>
-                                @foreach($pasien as $p)
-                                    <option value="{{ $p->id }}"
-                                        {{ old('pasien_id') == $p->id ? 'selected' : '' }}>
-                                        {{ $p->nama }}
-                                    </option>
-                                @endforeach
-                            </select>
-
-                            @error('pasien_id')
-                                <span class="invalid-feedback">{{ $message }}</span>
-                            @enderror
-                        </div>
+                          <div class="form-group mb-3">
+                        <label for="spesialis" class="form-label">Pasien</label>
+                        <input type="text" name="pasien_id" value="{{ old('pasien_id') }}" class="form-control @error('pasien_id') is-invalid @enderror" placeholder="Masukkan pasien">
+                        @error('pasien_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
 
                         {{-- Dokter --}}
                         <div class="form-group mb-3">
